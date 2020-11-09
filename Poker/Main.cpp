@@ -8,17 +8,19 @@ using namespace std;
 void printResults(int wins, int ties, int losses, int trials);
 void texasHoldEm();
 void omahaHoldEm();
+void omahaHoldEmHiLo();
 int readInt(string message);
 int getPlayers();
 string getCards(string message, int numCards);
 
 int main()
 {
-	
+	omahaHoldEmHiLo();
 }
 
-void omahaHoldEm()
+void omahaHoldEmHiLo()
 {
+	cout << "Playing Omaha Hold Em Hi/Lo 8" << endl;
 	int numPlayers = getPlayers();
 
 	while (true)
@@ -36,7 +38,69 @@ void omahaHoldEm()
 
 		hands.push_back(CardSet(cardStr));
 
-		for (int i = 0; i < numPlayers; i++)
+		for (int i = 0; i < numPlayers - 1; i++)
+		{
+			hands.push_back(CardSet());
+		}
+
+		Poker::omahaHoldEmHiLoHandProbability(hands, table);
+
+		// Flop
+		cardStr = getCards("Enter the 3 flop cards.", 3);;
+		if (cardStr == "quit")
+			break;
+		if (cardStr == "next")
+			continue;
+
+		table += CardSet(cardStr);
+
+		Poker::omahaHoldEmHiLoHandProbability(hands, table);
+
+		// Turn
+		cardStr = getCards("Enter the turn card.", 1);
+		if (cardStr == "quit")
+			break;
+		if (cardStr == "next")
+			continue;
+
+		table += CardSet(cardStr);
+
+		Poker::omahaHoldEmHiLoHandProbability(hands, table);
+
+		// River
+		cardStr = getCards("Enter the river card", 1);
+		if (cardStr == "quit")
+			break;
+		if (cardStr == "next")
+			continue;
+
+		table += CardSet(cardStr);
+
+		Poker::omahaHoldEmHiLoHandProbability(hands, table);
+	}
+}
+
+void omahaHoldEm()
+{
+	cout << "Playing Omaha Hold Em" << endl;
+	int numPlayers = getPlayers();
+
+	while (true)
+	{
+		cout << "----------------------------------------" << endl;
+		vector<CardSet> hands;
+		CardSet table;
+
+		// Pre-Flop
+		string cardStr = getCards("Enter your four cards.", 4);
+		if (cardStr == "quit")
+			break;
+		if (cardStr == "next")
+			continue;
+
+		hands.push_back(CardSet(cardStr));
+
+		for (int i = 0; i < numPlayers - 1; i++)
 		{
 			hands.push_back(CardSet());
 		}
@@ -85,6 +149,7 @@ void omahaHoldEm()
 
 void texasHoldEm()
 {
+	cout << "Playing Texas Hold Em" << endl;
 	int numPlayers = getPlayers();
 
 	while (true)
@@ -102,7 +167,7 @@ void texasHoldEm()
 
 		hands.push_back(CardSet(cardStr));
 
-		for (int i = 0; i < numPlayers; i++)
+		for (int i = 0; i < numPlayers - 1; i++)
 		{
 			hands.push_back(CardSet());
 		}

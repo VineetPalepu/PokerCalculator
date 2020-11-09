@@ -218,17 +218,19 @@ std::tuple<int, int, int, int, int, int> Poker::omahaHoldEmHiLoHandProbability(s
         else
         {
             equity *= 2;
+            
         }
 
         equitySum += equity;
     }
     
+    std::cout << std::endl;
     std::cout << "Wins Hi: " << winsHi * 100. / trials << "%" << std::endl;
     std::cout << "Ties Hi: " << tiesHi * 100. / trials << "%" << std::endl;
     std::cout << "Wins Lo: " << winsLo * 100. / trials << "%" << std::endl;
     std::cout << "Ties Lo: " << tiesLo * 100. / trials << "%" << std::endl;
     std::cout << "Equity: " << equitySum * 100 / trials << "%" << std::endl;
-
+    std::cout << std::endl;
 
     return { winsHi, winsLo, tiesHi, tiesLo, losses, trials };
 }
